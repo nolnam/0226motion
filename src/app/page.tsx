@@ -64,6 +64,18 @@ export default function EmotionDiaryPage() {
       className="relative min-h-screen w-full flex flex-col items-center justify-center p-8 bg-transition overflow-hidden"
       style={{ backgroundColor: currentEmotionStyle.bgColor }}
     >
+      {/* Background watermark "감정" */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+      >
+        <span
+          className="text-[30vw] font-bold opacity-[0.03] transition-all duration-1000 ease-in-out"
+          style={{ color: currentEmotionStyle.color }}
+        >
+          감정
+        </span>
+      </div>
+
       {/* Subtle indicator of current emotion */}
       <div
         className="absolute top-12 left-1/2 -translate-x-1/2 text-xs tracking-[0.3em] uppercase opacity-40 transition-all duration-1000 ease-in-out"
@@ -122,16 +134,19 @@ export default function EmotionDiaryPage() {
           onClick={handleSave}
           disabled={!text.trim() || saveStatus !== 'idle'}
           className={`
-            mt-12 px-10 py-4 rounded-full border border-white/10 text-[10px] uppercase tracking-[0.4em]
-            transition-all duration-500 hover:bg-white/5 disabled:opacity-0 btn-pop font-serif
-            ${saveStatus === 'saved' ? 'border-green-500/50 animate-pop' : ''}
-            ${saveStatus === 'saving' ? 'opacity-50' : ''}
+            mt-12 px-14 py-5 rounded-full border-2 text-base uppercase tracking-[0.3em]
+            transition-all duration-500 hover:scale-105 hover:shadow-lg disabled:opacity-0 btn-pop font-serif
+            ${saveStatus === 'saved' ? 'border-green-500/70 bg-green-500/10 animate-pop' : 'border-white/30 bg-white/5'}
+            ${saveStatus === 'saving' ? 'opacity-70' : ''}
           `}
-          style={{ color: currentEmotionStyle.color }}
+          style={{
+            color: currentEmotionStyle.color,
+            boxShadow: `0 0 30px ${currentEmotionStyle.color}20`
+          }}
         >
-          {saveStatus === 'idle' && 'Save Reflection'}
-          {saveStatus === 'saving' && 'Saving...'}
-          {saveStatus === 'saved' && 'Saved successfully'}
+          {saveStatus === 'idle' && '저장하기'}
+          {saveStatus === 'saving' && '저장 중...'}
+          {saveStatus === 'saved' && '저장 완료 ✓'}
         </button>
       </div>
 
